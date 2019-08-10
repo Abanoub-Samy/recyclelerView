@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initImageBitmaps(){
 
-
+        arr_title.add("fady");
+        arr_id.add(3);
+        arr_body.add("me");
 
 
         jsonPlaceHolderApi = ApiClient.getApiClient().create(JsonPlaceHolderApi.class);
@@ -55,14 +57,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<model>> call, Response<List<model>> response) {
                 List<model> posts = response.body();
-                
-                for (model post : posts) {
 
-                    arr_id.add(post.getId());
+                for (model post : posts) {
+                    Log.e(TAG, " done 2");
+                    //arr_id.add(post.getId());
                     arr_title.add(post.getTitle());
                     //arr_body.add(post.getBody());
                     //Toast.makeText(MainActivity.this, arr_id.size(), Toast.LENGTH_SHORT).show();
                 }
+                initRecyclerView();
+
 //                arr_title.add("fady");
 //                arr_id.add(3);
             }
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        initRecyclerView();
+
     }
 
     private void initRecyclerView(){

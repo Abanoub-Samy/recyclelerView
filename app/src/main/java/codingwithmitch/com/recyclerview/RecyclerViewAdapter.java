@@ -67,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Toast.makeText(mContext, arr_id.get(position).toString(), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(mContext, GetBody.class);
-                intent.putExtra("body", arr_body.get(position));
+                intent.putExtra("body", arr_body.get(position).toString());
                 mContext.startActivity(intent);
             }
         });
