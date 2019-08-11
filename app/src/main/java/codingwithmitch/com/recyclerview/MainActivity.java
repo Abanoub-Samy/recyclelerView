@@ -23,10 +23,14 @@ public class MainActivity extends AppCompatActivity {
 
     //vars
 
+
     JsonPlaceHolderApi jsonPlaceHolderApi;
     ArrayList<Integer> arr_id ;
     ArrayList<String> arr_title ;
     ArrayList<String> arr_body  ;
+    RecycleModel recycleModel ;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void initImageBitmaps(){
 
-        arr_title.add("fady");
-        arr_id.add(3);
-        arr_body.add("me");
+//        arr_title.add("fady");
+//        arr_id.add(3);
+//        arr_body.add("me");
+
 
 
         jsonPlaceHolderApi = ApiClient.getApiClient().create(JsonPlaceHolderApi.class);
 
 
-        //createUser();
+
         Call<List<model>> call = jsonPlaceHolderApi.getPosts();
 
         call.enqueue(new Callback<List<model>>() {
@@ -60,9 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
                 for (model post : posts) {
                     Log.e(TAG, " done 2");
-                    //arr_id.add(post.getId());
+                    arr_id.add(post.getId());
                     arr_title.add(post.getTitle());
-                    //arr_body.add(post.getBody());
+                    arr_body.add(post.getBody());
+                    recycleModel = new RecycleModel(arr_id,arr_title,arr_body);
                     //Toast.makeText(MainActivity.this, arr_id.size(), Toast.LENGTH_SHORT).show();
                 }
                 initRecyclerView();
@@ -83,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView(){
         Log.e(TAG, "initRecyclerView: init recyclerview.");
         RecyclerView recyclerView = findViewById(R.id.recyclerv_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, arr_id, arr_title,arr_body);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter( this ,recycleModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

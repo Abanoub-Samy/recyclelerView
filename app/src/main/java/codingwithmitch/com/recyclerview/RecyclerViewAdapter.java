@@ -4,34 +4,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<Integer> arr_id;
-    private ArrayList<String> arr_title;
-    private ArrayList<String> arr_body;
+
+    RecycleModel recycleModel;
+
 
     private Context mContext;
 
-    RecyclerViewAdapter(Context context, ArrayList<Integer> id, ArrayList<String> title,ArrayList<String> body) {
-        arr_id = id;
-        arr_title = title;
-        arr_body = body ;
-        mContext = context;
+
+
+
+
+    public RecyclerViewAdapter(Context context ,RecycleModel recycleModel) {
+        this.mContext = context ;
+        this.recycleModel = recycleModel;
     }
+
+
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView idText;
@@ -56,18 +55,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        holder.idText.setText(arr_id.get(position).toString());
-        holder.titletext.setText(arr_title.get(position));
+        holder.idText.setText(recycleModel.id.get(position).toString());
+        holder.titletext.setText(recycleModel.title.get(position));
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on: " + arr_id.get(position));
-
-                Toast.makeText(mContext, arr_id.get(position).toString(), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(mContext, GetBody.class);
-                intent.putExtra("body", arr_body.get(position).toString());
+                intent.putExtra("body", recycleModel.body.get(position).toString());
                 mContext.startActivity(intent);
             }
         });
@@ -75,7 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return arr_id.size();
+        return recycleModel.id.size();
     }
 
 
